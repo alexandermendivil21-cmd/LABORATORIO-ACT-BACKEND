@@ -1,0 +1,77 @@
+.resultados {
+  padding: 1.5rem;
+}
+
+.section-header {
+  margin-bottom: 1.5rem;
+}
+
+.section-header h1 {
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+}
+
+.resumen-datos p {
+  margin: 0.25rem 0;
+}
+
+.chip {
+  padding: 0.2rem 0.5rem;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.chip.normal {
+  background: #e0f7fa;
+  color: #00796b;
+}
+
+.chip.alerta {
+  background: #ffeaea;
+  color: #e53935;
+}
+
+.table-wrapper {
+  overflow-x: auto;
+}
+
+.tabla-resultados {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+.tabla-resultados th,
+.tabla-resultados td {
+  padding: 0.5rem;
+  text-align: left;
+  border-bottom: 1px solid #eee;
+}
+
+.tabla-resultados tr.alerta {
+  background-color: #fff0f0;
+}
+
+.chart-container {
+  width: 100%;
+  height: 300px; /* obligatorio para que Chart.js lo muestre */
+}
+
+
+/* Responsive */
+@media (max-width: 768px) {
+  .grid.grid-2 {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+}

@@ -1,0 +1,311 @@
+/* =============================
+   Variables globales
+============================= */
+:root {
+  --font: 'Josefin Sans', sans-serif;
+  --bg-page: linear-gradient(-45deg, #1d4ed8, #1e40af, #0f172a, #1e3a8a);
+  --navbar-bg: #ffffff;
+  --brand-color: #00274A;
+  --navbar-link-color: #000000;
+  --label-color: #ffffff;
+  --btn-bg: #1d4ed8;
+  --card-bg: rgba(255, 255, 255, 0.15);
+  --border-radius: 16px;
+}
+
+/* =============================
+   Reset
+============================= */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* =============================
+   Body
+============================= */
+body {
+  font-family: var(--font);
+  font-weight: 700;
+  background: var(--bg-page);
+  background-size: 400% 400%;
+  animation: waveFlow 12s ease infinite;
+  color: var(--label-color);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* =============================
+   Navbar
+============================= */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: var(--navbar-bg);
+  padding: 1rem 2rem;
+}
+
+.navbar__brand {
+  color: var(--brand-color);
+  font-size: 1.25rem;
+}
+
+.navbar__menu {
+  display: flex;
+  gap: 1.5rem;
+}
+
+.navbar__link {
+  color: var(--navbar-link-color);
+  text-decoration: none;
+  font-weight: 700;
+}
+
+.navbar__link:hover {
+  opacity: 0.8;
+}
+
+/* =============================
+   Login container + card
+============================= */
+.login-container {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+}
+
+.login-card {
+  background: rgba(255, 255, 255, 0.25); /* más visible */
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  max-width: 360px;
+  width: 100%;
+  padding: 2rem;
+  border-radius: var(--border-radius);
+  box-shadow: 0 8px 24px rgba(29, 78, 216, 0.3);
+  animation: fadeSlide 1s ease forwards;
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+/* =============================
+   Tabs
+============================= */
+.tabs {
+  display: flex;
+  border-bottom: 1px solid #ddd;
+  margin-bottom: 1.5rem;
+}
+
+.tab {
+  flex: 1;
+  padding: 0.75rem 0;
+  background: none;
+  border: none;
+  font-family: var(--font);
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--label-color);
+  cursor: pointer;
+}
+
+.tab--active {
+  border-bottom: 2px solid var(--label-color);
+}
+
+.tab[disabled] {
+  opacity: 0.5;
+  cursor: not-allowed;
+  border-bottom-color: transparent;
+}
+
+.tab[disabled]:hover {
+  background: none;
+}
+
+/* =============================
+   Formulario
+============================= */
+.login-form .form-group {
+  margin-bottom: 1rem;
+}
+
+.login-form label {
+  display: block;
+  margin-bottom: 0.3rem;
+  font-size: 0.9rem;
+  color: var(--label-color);
+}
+
+.login-form input,
+.login-form select {
+  width: 100%;
+  padding: 0.6rem;
+  border: 1px solid #ccc;
+  border-radius: var(--border-radius);
+  font-size: 0.95rem;
+  font-weight: 700;
+  font-family: var(--font);
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.login-form input:focus,
+.login-form select:focus {
+  outline: none;
+  border-color: #1d4ed8;
+  box-shadow: 0 0 6px rgba(29, 78, 216, 0.4);
+}
+
+/* =============================
+   Input con icono
+============================= */
+.input-icon {
+  position: relative;
+}
+
+.input-icon input {
+  padding-left: 2.2rem;
+}
+
+.input-icon .icon {
+  position: absolute;
+  left: 0.6rem;
+  top: 50%;
+  transform: translateY(-50%);
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+/* =============================
+   Footer del form
+============================= */
+.form-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.checkbox {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem; /* espacio entre el checkbox y el texto */
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.checkbox input {
+  margin: 0; 
+  width: auto;
+  height: auto;
+}
+
+.link-small {
+  font-size: 0.85rem;
+  color: var(--label-color);
+  text-decoration: none;
+  font-weight: 700;
+}
+
+.link-small:hover {
+  text-decoration: underline;
+}
+
+/* =============================
+   Botón
+============================= */
+.btn-primary {
+  width: 100%;
+  padding: 0.75rem;
+  background-color: #1d4ed8; /* azul fuerte */
+  color: #fff;
+  border: none;
+  border-radius: var(--border-radius);
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+
+.btn-primary:hover {
+  background-color: #0073E6;
+  transform: scale(1.03);
+  box-shadow: 0 4px 12px rgba(0, 115, 230, 0.4);
+}
+
+/* =============================
+   Errores
+============================= */
+.error {
+  color: red;
+  margin-top: 1rem;
+}
+
+.escondido {
+  display: none;
+}
+
+/* =============================
+   Animaciones
+============================= */
+@keyframes waveFlow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes fadeSlide {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* =============================
+   Responsive
+============================= */
+@media (max-width: 480px) {
+  .login-card {
+    padding: 1.5rem;
+    max-width: 90%;
+  }
+  .navbar__menu {
+    display: none; 
+  }
+}
+
+/* =============================
+   Iconos
+============================= */
+
+/* Hace que el wrapper sea relativo */
+.input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-wrapper input {
+  width: 100%;
+  padding-left: 35px; 
+  box-sizing:border-box;
+}
+
+/* Estilo de los íconos dentro del input */
+.input-wrapper svg {
+  position: absolute;
+  left: 10px;     
+  width: 18px;
+  height: 18px;
+  color: #000;    
+  pointer-events: none;
+}
+
+

@@ -30,6 +30,12 @@ const usuarioSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    tipo_usuario: {
+      type: String,
+      enum: ["user", "admin"],
+      default: "user",
+      required: true,
+    },
   },
   { timestamps: true } 
 );

@@ -63,6 +63,7 @@ export async function register(req, res) {
       password_create: hash,
       mayor,
       menor,
+      tipo_usuario: "user"
     });
 
     return res.status(201).json({
@@ -114,8 +115,11 @@ export async function login(req, res) {
       return res.status(401).json({ ok: false, message: "Contraseña incorrecta." });
     }
 
+    // Redirigir según tipo_usuario
+    let role = user.tipo_usuario || "user";
+    let redirect = role === "admin" ? "/admin" : "/user";
     const token = jwt.sign(
-      { tipo_documento: tipo, num_documento, role: "user" },
+      { tipo_documento: tipo, num_documento, role },
       process.env.JWT_SECRET,
       { expiresIn: "1h" }
     );
@@ -124,8 +128,8 @@ export async function login(req, res) {
       ok: true,
       message: "Login exitoso.",
       token,
-      role: "user",
-      redirect: "/user",
+      role,
+      redirect,
     });
   } catch (err) {
     console.error("Error en login:", err);

@@ -12,7 +12,7 @@ app.set('port', 5000);
 
 // Configuración
 app.use(express.json());
-app.use(express.static('/workspaces/LABORATORIO-ACT-BACKEND/FRONTEND')); // sirve CSS, JS, imágenes
+app.use(express.static(path.join(__dirname, 'FRONTEND', 'LABORATORIO-ACT-FRONTEND-main'))); // sirve CSS, JS, imágenes
 
 
 
@@ -20,12 +20,12 @@ connectDB(); // Conectarse a la BD antesd e que ejecute el servidor
 
 
 // Rutas HTML
-app.get('/', (req, res) => res.sendFile('/workspaces/LABORATORIO-ACT-BACKEND/FRONTEND/index.html'));
-app.get('/login', (req, res) => res.sendFile('/workspaces/LABORATORIO-ACT-BACKEND/FRONTEND/login.html'));
-app.get('/register', (req, res) => res.sendFile('/workspaces/LABORATORIO-ACT-BACKEND/FRONTEND/register.html'));
-app.get('/password', (req, res) => res.sendFile('/workspaces/LABORATORIO-ACT-BACKEND/FRONTEND/password.html'));
-app.get('/admin', (req, res) => res.sendFile('/workspaces/LABORATORIO-ACT-BACKEND/FRONTEND/login_exitoso/admin.html'));
-app.get('/user', (req, res) => res.sendFile('/workspaces/LABORATORIO-ACT-BACKEND/FRONTEND/index2.html'));
+app.get('/', (req, res) => res.sendFile(path.join(__dirname, 'FRONTEND', 'LABORATORIO-ACT-FRONTEND-main', 'index.html')));
+app.get('/login', (req, res) => res.sendFile(path.join(__dirname, 'FRONTEND', 'LABORATORIO-ACT-FRONTEND-main', 'login.html')));
+app.get('/register', (req, res) => res.sendFile(path.join(__dirname, 'FRONTEND', 'LABORATORIO-ACT-FRONTEND-main', 'register.html')));
+app.get('/password', (req, res) => res.sendFile(path.join(__dirname, 'FRONTEND', 'LABORATORIO-ACT-FRONTEND-main', 'password.html')));
+app.get('/admin', (req, res) => res.sendFile(path.join(__dirname, 'FRONTEND', 'LABORATORIO-ACT-FRONTEND-main', 'admin.html')));
+app.get('/user', (req, res) => res.sendFile(path.join(__dirname, 'FRONTEND', 'LABORATORIO-ACT-FRONTEND-main', 'user.html')));
 
 // Rutas API
 app.post('/api/register', authentication.register);
