@@ -10,7 +10,14 @@ form.addEventListener('submit', async e => {
     password_create: elems['password_create'].value,
     mayor: elems['mayor'].checked,
     menor: elems['menor'].checked,
-    tipo_usuario: 'user'
+    tipo_usuario: elems['Tipo_usuario'] ? elems['Tipo_usuario'].value : 'paciente',
+    Tipo_usuario: elems['Tipo_usuario'] ? elems['Tipo_usuario'].value : 'paciente',
+    nombres: elems['nombres'].value,
+    apellidos: elems['apellidos'].value,
+    edad: parseInt(elems['edad'].value),
+    genero: elems['genero'].value,
+    direccion: elems['direccion'].value,
+    celular: elems['celular'].value
   };
   try {
     const res = await fetch('/api/register', {

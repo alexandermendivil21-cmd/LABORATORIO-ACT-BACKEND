@@ -50,7 +50,7 @@ form.addEventListener("submit", async (e) => {
     if (data.role) localStorage.setItem('role', data.role);
 
     // Redirigir siempre a user.html
-    window.location.href = 'user.html';
+  window.location.href = '/user';
     // Guardar token para llamadas autenticadas posteriores
     localStorage.setItem("token", data.token);
 

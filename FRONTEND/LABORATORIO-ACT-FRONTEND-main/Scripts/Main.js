@@ -21,7 +21,7 @@ async function request(path, method = 'GET', body) {
 document.addEventListener("DOMContentLoaded", () => {
   if (document.getElementById("login-btn")) {
     document.getElementById("login-btn").onclick = function () {
-      window.location.href = "login.html";
+  window.location.href = "/login";
     };
   }
 

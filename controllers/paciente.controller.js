@@ -2,13 +2,13 @@
 import fs from "fs";
 import path from "path";
 import { fileURLToPath } from "url";
-import Paciente from "../models/Users.js";
+import Usuario from "../models/Usuario.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 export const getPacientes = async (req, res) => {
   try {
-    const pacientes = await Paciente.find();
+    const pacientes = await Usuario.find();
     res.json(pacientes);
   } catch (error) {
     res.status(500).json({ message: "Error al obtener pacientes", error });
@@ -18,7 +18,7 @@ export const getPacientes = async (req, res) => {
 // --- Obtener un paciente por ID ---
 export const getPacienteById = async (req, res) => {
   try {
-    const paciente = await Paciente.findById(req.params.id);
+    const paciente = await Usuario.findById(req.params.id);
     if (!paciente) {
       return res.status(404).json({ message: "Paciente no encontrado" });
     }
@@ -31,7 +31,7 @@ export const getPacienteById = async (req, res) => {
 // --- Crear un paciente ---
 export const createPaciente = async (req, res) => {
   try {
-    const nuevoPaciente = new Paciente(req.body);
+    const nuevoPaciente = new Usuario(req.body);
     await nuevoPaciente.save();
     res.status(201).json(nuevoPaciente);
   } catch (error) {
@@ -42,10 +42,10 @@ export const createPaciente = async (req, res) => {
 // --- Actualizar un paciente ---
 export const updatePaciente = async (req, res) => {
   try {
-    const paciente = await Paciente.findByIdAndUpdate(
+    const paciente = await Usuario.findByIdAndUpdate(
       req.params.id,
       req.body,
-      { new: true } // devuelve el actualizado
+      { new: true }
     );
     if (!paciente) {
       return res.status(404).json({ message: "Paciente no encontrado" });
@@ -59,7 +59,7 @@ export const updatePaciente = async (req, res) => {
 // --- Eliminar un paciente ---
 export const deletePaciente = async (req, res) => {
   try {
-    const paciente = await Paciente.findByIdAndDelete(req.params.id);
+    const paciente = await Usuario.findByIdAndDelete(req.params.id);
     if (!paciente) {
       return res.status(404).json({ message: "Paciente no encontrado" });
     }

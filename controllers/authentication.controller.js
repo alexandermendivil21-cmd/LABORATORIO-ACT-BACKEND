@@ -16,9 +16,15 @@ export async function register(req, res) {
       password_create,
       mayor,
       menor,
+      nombres,
+      apellidos,
+      edad,
+      genero,
+      direccion,
+      celular,
     } = req.body;
 
-    if (!rawTipo || !num_documento || !fecha_emision || !password_create) {
+    if (!rawTipo || !num_documento || !fecha_emision || !password_create || !nombres || !apellidos || !edad || !genero || !direccion || !celular) {
       return res.status(400).json({ ok: false, message: "Faltan campos obligatorios." });
     }
 
@@ -63,7 +69,13 @@ export async function register(req, res) {
       password_create: hash,
       mayor,
       menor,
-      tipo_usuario: "user"
+      tipo_usuario: "paciente",
+      nombres,
+      apellidos,
+      edad,
+      genero,
+      direccion,
+      celular,
     });
 
     return res.status(201).json({
@@ -116,8 +128,8 @@ export async function login(req, res) {
     }
 
     // Redirigir según tipo_usuario
-    let role = user.tipo_usuario || "user";
-    let redirect = role === "admin" ? "/admin" : "/user";
+  let role = user.tipo_usuario || "paciente";
+  let redirect = role === "admin" ? "/admin" : "/user";
     const token = jwt.sign(
       { tipo_documento: tipo, num_documento, role },
       process.env.JWT_SECRET,

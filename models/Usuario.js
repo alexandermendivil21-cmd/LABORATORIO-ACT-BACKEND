@@ -32,12 +32,42 @@ const usuarioSchema = new mongoose.Schema(
     },
     tipo_usuario: {
       type: String,
-      enum: ["user", "admin"],
-      default: "user",
+      enum: ["paciente", "admin"],
+      default: "paciente",
       required: true,
     },
+    // Campos agregados desde Users.js
+    nombres: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    apellidos: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    edad: {
+      type: Number,
+      required: true,
+      min: 0,
+    },
+    genero: {
+      type: String,
+      enum: ["Masculino", "Femenino", "Otro"],
+      required: true,
+    },
+    direccion: {
+      type: String,
+      required: true,
+    },
+    celular: {
+      type: String,
+      required: true,
+      match: /^[0-9]{9}$/,
+    },
   },
-  { timestamps: true } 
+  { timestamps: true }
 );
 
 const Usuario = mongoose.model("Usuario", usuarioSchema);

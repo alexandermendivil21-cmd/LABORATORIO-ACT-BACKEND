@@ -20,12 +20,12 @@ connectDB(); // Conectarse a la BD antesd e que ejecute el servidor
 
 
 // Rutas HTML
-app.get('/', (req, res) => res.sendFile(path.join(__dirname, 'FRONTEND', 'LABORATORIO-ACT-FRONTEND-main', 'index.html')));
-app.get('/login', (req, res) => res.sendFile(path.join(__dirname, 'FRONTEND', 'LABORATORIO-ACT-FRONTEND-main', 'login.html')));
-app.get('/register', (req, res) => res.sendFile(path.join(__dirname, 'FRONTEND', 'LABORATORIO-ACT-FRONTEND-main', 'register.html')));
-app.get('/password', (req, res) => res.sendFile(path.join(__dirname, 'FRONTEND', 'LABORATORIO-ACT-FRONTEND-main', 'password.html')));
-app.get('/admin', (req, res) => res.sendFile(path.join(__dirname, 'FRONTEND', 'LABORATORIO-ACT-FRONTEND-main', 'admin.html')));
-app.get('/user', (req, res) => res.sendFile(path.join(__dirname, 'FRONTEND', 'LABORATORIO-ACT-FRONTEND-main', 'user.html')));
+app.get('/', (req, res) => res.sendFile(path.join(__dirname, 'FRONTEND', 'LABORATORIO-ACT-FRONTEND-main', 'pages', 'index.html')));
+app.get('/login', (req, res) => res.sendFile(path.join(__dirname, 'FRONTEND', 'LABORATORIO-ACT-FRONTEND-main', 'pages', 'login.html')));
+app.get('/register', (req, res) => res.sendFile(path.join(__dirname, 'FRONTEND', 'LABORATORIO-ACT-FRONTEND-main', 'pages', 'register.html')));
+app.get('/password', (req, res) => res.sendFile(path.join(__dirname, 'FRONTEND', 'LABORATORIO-ACT-FRONTEND-main', 'pages', 'password.html')));
+app.get('/admin', (req, res) => res.sendFile(path.join(__dirname, 'FRONTEND', 'LABORATORIO-ACT-FRONTEND-main', 'pages', 'admin.html')));
+app.get('/user', (req, res) => res.sendFile(path.join(__dirname, 'FRONTEND', 'LABORATORIO-ACT-FRONTEND-main', 'pages', 'user.html')));
 
 // Rutas API
 app.post('/api/register', authentication.register);
