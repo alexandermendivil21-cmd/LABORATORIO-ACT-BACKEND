@@ -22,9 +22,10 @@ export async function register(req, res) {
       genero,
       direccion,
       celular,
+      correo,
     } = req.body;
 
-    if (!rawTipo || !num_documento || !fecha_emision || !password_create || !nombres || !apellidos || !edad || !genero || !direccion || !celular) {
+    if (!rawTipo || !num_documento || !fecha_emision || !password_create || !nombres || !apellidos || !edad || !genero || !direccion || !celular || !correo) {
       return res.status(400).json({ ok: false, message: "Faltan campos obligatorios." });
     }
 
@@ -53,9 +54,9 @@ export async function register(req, res) {
     }
 
     // 🔍 Verificar si ya existe en BD
-    const existe = await Usuario.findOne({ tipo_documento: tipo, num_documento });
+    const existe = await Usuario.findOne({ $or: [ { tipo_documento: tipo, num_documento }, { correo } ] });
     if (existe) {
-      return res.status(400).json({ ok: false, message: "Usuario ya registrado." });
+      return res.status(400).json({ ok: false, message: "Usuario o correo ya registrado." });
     }
 
     const salt = await bcryptjs.genSalt(5);
@@ -76,6 +77,7 @@ export async function register(req, res) {
       genero,
       direccion,
       celular,
+      correo,
     });
 
     return res.status(201).json({

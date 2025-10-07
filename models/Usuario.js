@@ -36,6 +36,13 @@ const usuarioSchema = new mongoose.Schema(
       default: "paciente",
       required: true,
     },
+    correo: {
+      type: String,
+      required: true,
+      unique: true,
+      trim: true,
+      match: /^[\w-.]+@[\w-]+\.[a-zA-Z]{2,}$/,
+    },
     // Campos agregados desde Users.js
     nombres: {
       type: String,

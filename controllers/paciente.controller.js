@@ -31,6 +31,14 @@ export const getPacienteById = async (req, res) => {
 // --- Crear un paciente ---
 export const createPaciente = async (req, res) => {
   try {
+    if (!req.body.correo) {
+      return res.status(400).json({ message: "El campo correo es obligatorio" });
+    }
+    // Verificar si el correo ya existe
+    const existeCorreo = await Usuario.findOne({ correo: req.body.correo });
+    if (existeCorreo) {
+      return res.status(400).json({ message: "El correo ya está registrado" });
+    }
     const nuevoPaciente = new Usuario(req.body);
     await nuevoPaciente.save();
     res.status(201).json(nuevoPaciente);

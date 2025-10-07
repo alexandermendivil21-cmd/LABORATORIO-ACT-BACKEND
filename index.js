@@ -3,6 +3,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import { methods as authentication } from './controllers/authentication.controller.js';
 import pacienteRoutes from "./Routes/pacientes.routes.js";
+import citaRoutes from "./Routes/citas.routes.js";
 import connectDB from './Config/mongodb.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -33,6 +34,7 @@ app.post('/api/login', authentication.login);
 app.post('/api/password', authentication.password);
 
 app.use("/api", pacienteRoutes);
+app.use("/api", citaRoutes);
 // Servidor
 app.listen(app.get('port'), () => {
    console.log(`🚀 Servidor corriendo en http://localhost:5000`);

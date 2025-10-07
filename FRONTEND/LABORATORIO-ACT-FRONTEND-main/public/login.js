@@ -49,13 +49,12 @@ form.addEventListener("submit", async (e) => {
     if (data.token) localStorage.setItem('token', data.token);
     if (data.role) localStorage.setItem('role', data.role);
 
-    // Redirigir siempre a user.html
-  window.location.href = '/user';
-    // Guardar token para llamadas autenticadas posteriores
-    localStorage.setItem("token", data.token);
-
-    // Redirigir al área admin
-    window.location.href = data.redirect || "/admin";
+    // Redirigir según el backend
+    if (data.redirect) {
+      window.location.href = data.redirect;
+    } else {
+      window.location.href = "/user";
+    }
   } catch (err) {
     console.error("Error en fetch:", err);
     mensajeError.textContent = "No se pudo conectar al servidor.";
