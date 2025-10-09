@@ -10,74 +10,36 @@ dotenv.config();
 export async function register(req, res) {
   try {
     const {
-      tipo_documento: rawTipo,
+      tipo_documento,
       num_documento,
-      fecha_emision,
+      email,
       password_create,
-      mayor,
-      menor,
-      nombres,
-      apellidos,
-      edad,
-      genero,
-      direccion,
-      celular,
-      correo,
     } = req.body;
 
-    if (!rawTipo || !num_documento || !fecha_emision || !password_create || !nombres || !apellidos || !edad || !genero || !direccion || !celular || !correo) {
+    if (!tipo_documento || !num_documento || !email || !password_create) {
       return res.status(400).json({ ok: false, message: "Faltan campos obligatorios." });
     }
 
-    const tipo = rawTipo.toLowerCase();
-    if (!["dni", "pasaporte", "carnet-ext"].includes(tipo)) {
+    if (!["dni", "pasaporte", "carnet-ext"].includes(tipo_documento)) {
       return res.status(400).json({ ok: false, message: "Tipo de documento inválido." });
     }
 
-    if (
-      !/^\d+$/.test(num_documento) ||
-      ((tipo === "dni" || tipo === "pasaporte") && num_documento.length !== 8) ||
-      (tipo === "carnet-ext" && num_documento.length !== 9)
-    ) {
-      return res.status(400).json({ ok: false, message: "Número de documento inválido." });
-    }
-
-    const fecha = new Date(fecha_emision);
-    const hoy = new Date();
-    hoy.setHours(0, 0, 0, 0);
-    if (isNaN(fecha) || fecha >= hoy) {
-      return res.status(400).json({ ok: false, message: "Fecha de emisión inválida." });
-    }
-
-    if ((mayor && menor) || (!mayor && !menor)) {
-      return res.status(400).json({ ok: false, message: "Marca mayor o menor (solo una)." });
-    }
-
-    // 🔍 Verificar si ya existe en BD
-    const existe = await Usuario.findOne({ $or: [ { tipo_documento: tipo, num_documento }, { correo } ] });
+    // Verificar si ya existe en BD
+    const existe = await Usuario.findOne({ $or: [ { tipo_documento, num_documento }, { email } ] });
     if (existe) {
       return res.status(400).json({ ok: false, message: "Usuario o correo ya registrado." });
     }
 
-    const salt = await bcryptjs.genSalt(5);
+    const salt = await bcryptjs.genSalt(10);
     const hash = await bcryptjs.hash(password_create, salt);
 
-    // Guardar en MongoDB
     await Usuario.create({
-      tipo_documento: tipo,
+      tipo_documento,
       num_documento,
-      fecha_emision: fecha,
+      email,
       password_create: hash,
-      mayor,
-      menor,
-      tipo_usuario: "paciente",
-      nombres,
-      apellidos,
-      edad,
-      genero,
-      direccion,
-      celular,
-      correo,
+      rol: "paciente",
+      estado: "activo",
     });
 
     return res.status(201).json({
@@ -94,46 +56,43 @@ export async function register(req, res) {
 /** LOGIN **/
 export async function login(req, res) {
   try {
-    const { tipo_documento, num_documento, password } = req.body;
-    if (!tipo_documento || !num_documento || !password) {
+    const { tipo_documento, num_documento, password_create } = req.body;
+    if (!tipo_documento || !num_documento || !password_create) {
       return res.status(400).json({ ok: false, message: "Faltan campos." });
     }
 
-    const tipo = tipo_documento.toLowerCase();
-
     // Admin hardcodeado
-    if (tipo === "dni" && num_documento === "73066688" && password === "admin123") {
+    if (tipo_documento === "dni" && num_documento === "73066688" && password_create === "admin123") {
       const token = jwt.sign(
-        { tipo_documento: tipo, num_documento, role: "admin" },
+        { tipo_documento, num_documento, rol: "admin" },
         process.env.JWT_SECRET,
         { expiresIn: "1h" }
       );
-
       return res.status(200).json({
         ok: true,
         message: "Login exitoso como ADMIN.",
         token,
-        role: "admin",
+        rol: "admin",
         redirect: "/admin",
       });
     }
 
-    // 🔍 Buscar usuario en MongoDB
-    const user = await Usuario.findOne({ tipo_documento: tipo, num_documento });
+    // Buscar usuario en MongoDB
+    const user = await Usuario.findOne({ tipo_documento, num_documento });
     if (!user) {
       return res.status(404).json({ ok: false, message: "Usuario no encontrado." });
     }
 
-    const match = await bcryptjs.compare(password, user.password_create);
+    const match = await bcryptjs.compare(password_create, user.password_create);
     if (!match) {
       return res.status(401).json({ ok: false, message: "Contraseña incorrecta." });
     }
 
-    // Redirigir según tipo_usuario
-  let role = user.tipo_usuario || "paciente";
-  let redirect = role === "admin" ? "/admin" : "/user";
+    // Redirigir según rol
+    let rol = user.rol || "paciente";
+    let redirect = rol === "admin" ? "/admin" : "/user";
     const token = jwt.sign(
-      { tipo_documento: tipo, num_documento, role },
+      { tipo_documento, num_documento, rol },
       process.env.JWT_SECRET,
       { expiresIn: "1h" }
     );
@@ -142,7 +101,7 @@ export async function login(req, res) {
       ok: true,
       message: "Login exitoso.",
       token,
-      role,
+      rol,
       redirect,
     });
   } catch (err) {

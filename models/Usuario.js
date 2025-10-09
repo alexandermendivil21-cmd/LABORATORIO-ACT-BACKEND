@@ -3,75 +3,37 @@ import mongoose from "mongoose";
 const usuarioSchema = new mongoose.Schema(
   {
     tipo_documento: {
-        type: String,
-        enum: ["dni", "pasaporte", "carnet-ext"], 
-        required: true,
+      type: String,
+      enum: ["dni", "pasaporte", "carnet-ext"],
+      required: true,
     },
-
     num_documento: {
       type: String,
       required: true,
-      unique: true, // cada documento debe ser único
+      unique: true,
       trim: true,
     },
-    fecha_emision: {
-      type: Date,
-      required: true,
-    },
-    password_create: {
-      type: String,
-      required: true,
-    },
-    mayor: {
-      type: Boolean,
-      default: false,
-    },
-    menor: {
-      type: Boolean,
-      default: false,
-    },
-    tipo_usuario: {
-      type: String,
-      enum: ["paciente", "admin"],
-      default: "paciente",
-      required: true,
-    },
-    correo: {
+    email: {
       type: String,
       required: true,
       unique: true,
       trim: true,
       match: /^[\w-.]+@[\w-]+\.[a-zA-Z]{2,}$/,
     },
-    // Campos agregados desde Users.js
-    nombres: {
-      type: String,
-      required: true,
-      trim: true,
-    },
-    apellidos: {
-      type: String,
-      required: true,
-      trim: true,
-    },
-    edad: {
-      type: Number,
-      required: true,
-      min: 0,
-    },
-    genero: {
-      type: String,
-      enum: ["Masculino", "Femenino", "Otro"],
-      required: true,
-    },
-    direccion: {
+    password_create: {
       type: String,
       required: true,
     },
-    celular: {
+    rol: {
       type: String,
+      default: "paciente",
+      enum: ["paciente", "admin", "recepcionista", "tecnico", "medico"],
       required: true,
-      match: /^[0-9]{9}$/,
+    },
+    estado: {
+      type: String,
+      default: "activo",
+      enum: ["activo", "inactivo"],
     },
   },
   { timestamps: true }

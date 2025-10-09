@@ -1,12 +1,17 @@
 import mongoose from "mongoose";
 
 const citaSchema = new mongoose.Schema({
-  paciente: {
+  pacienteId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Usuario",
     required: true,
   },
-  fecha: {
+  medicoId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Usuario",
+    required: true,
+  },
+  fechaHora: {
     type: Date,
     required: true,
   },
@@ -17,8 +22,8 @@ const citaSchema = new mongoose.Schema({
   },
   estado: {
     type: String,
-    enum: ["pendiente", "confirmada", "cancelada"],
-    default: "pendiente",
+    required: true,
+    trim: true,
   },
 }, { timestamps: true });
 

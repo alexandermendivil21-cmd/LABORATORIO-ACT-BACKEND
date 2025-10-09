@@ -4,20 +4,10 @@ form.addEventListener('submit', async e => {
   e.preventDefault();
   const elems = form.elements;
   const payload = {
-    correo: elems['correo'].value,
     tipo_documento: elems['tipo_documento'].value,
     num_documento: elems['num_documento'].value,
-    fecha_emision: elems['fecha_emision'].value,
-    password_create: elems['password_create'].value,
-    mayor: elems['mayor'].checked,
-    menor: elems['menor'].checked,
-    tipo_usuario: 'paciente',
-    nombres: elems['nombres'].value,
-    apellidos: elems['apellidos'].value,
-    edad: parseInt(elems['edad'].value),
-    genero: elems['genero'].value,
-    direccion: elems['direccion'].value,
-    celular: elems['celular'].value
+    email: elems['email'].value,
+    password_create: elems['password_create'].value
   };
   try {
     const res = await fetch('/api/register', {

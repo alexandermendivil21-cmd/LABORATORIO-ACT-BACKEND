@@ -28,7 +28,7 @@ form.addEventListener("submit", async (e) => {
   const payload = {
     tipo_documento: elems["tipo_documento"].value,
     num_documento:   elems["num_documento"].value,
-    password:        elems["password"].value
+    password_create: elems["password_create"].value
   };
 
   try {
